@@ -2,10 +2,11 @@
   "name": "mycontacts-backend-api",
   "version": "1.0.0",
   "description": "This is sample express project for to handle contacts",
-  "main": "server.js",
+  "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon src/server",
+    "start": "node src/server"
   },
   "author": "Ram HY",
   "license": "ISC",
