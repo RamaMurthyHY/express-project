@@ -1,0 +1,4 @@
+# Install REST Client extension in vs-code to test end-points
+
+### Health-check route
+GET http://localhost:5001/health-check
