@@ -1,9 +1,11 @@
 import express, { Express, Request, Response } from "express";
 import { config } from "dotenv";
-config(); // Config function will map the variables defined in .env file to node process
-
+import { connectDb } from "./db";
 import contactsRouter from "./routes/contacts.routes";
 import { errorHandler } from "./middlewares/errorHandler";
+
+config(); // Config function will map the variables defined in .env file to node process
+connectDb();
 
 const app: Express = express();
 const port: Number = Number(process.env.PORT) || 5000;
