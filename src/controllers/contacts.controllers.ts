@@ -1,7 +1,17 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
+import { Contacts } from "../db/models";
 
-const getAllContacts = (req: Request, res: Response) => {
-  res.status(200).json({ message: "Get all contacts" });
+const getAllContacts = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const contacts = await Contacts.find();
+    res.status(200).json(contacts);
+  } catch (error) {
+    next(error);
+  }
 };
 
 const getContact = (req: Request, res: Response) => {
