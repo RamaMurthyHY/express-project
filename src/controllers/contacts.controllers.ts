@@ -15,8 +15,21 @@ const getAllContacts = async (
   }
 };
 
-const getContact = (req: Request, res: Response) => {
-  res.status(200).json({ message: "Get a contact" });
+const getContact = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const _id = req.params.id;
+    const contact = await Contacts.findById(_id).catch((error) => {
+      throw error;
+    });
+    if (!contact) {
+      res.status(StatusCodes.NotFound);
+      throw new Error("Contact not found for the give id");
+    }
+    res.status(200).json(contact);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
 };
 
 const createContact = async (
