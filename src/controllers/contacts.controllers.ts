@@ -62,12 +62,33 @@ const createContact = async (
   }
 };
 
-const updateContact = (req: Request, res: Response) => {
-  res.status(200).json({ message: "Update contact" });
+const updateContact = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const _id = req.params.id;
+    const { name } = req.body || {};
+    const contact = await Contacts.findById(_id);
+    if (!contact) {
+      res.status(StatusCodes.NotFound);
+      throw new Error("Contact not found");
+    }
+
+    const updatedContact = await Contacts.findByIdAndUpdate(
+      _id,
+      { name },
+      {
+        new: true,
+      }
+    );
+    res.status(200).json(updatedContact);
+  } catch (error) {
+    next(error);
+  }
 };
 
-const deleteContact = (req: Request, res: Response) => {
-  res.status(200).json({ message: "Delete contact" });
 };
 
 export {
