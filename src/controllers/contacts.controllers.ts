@@ -89,6 +89,24 @@ const updateContact = async (
   }
 };
 
+const deleteContact = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const _id = req.params.id;
+    const contact = await Contacts.findById(_id);
+    if (!contact) {
+      res.status(StatusCodes.NotFound);
+      throw new Error("Contact not found to delete");
+    }
+
+    await contact.deleteOne();
+    res.status(200).json(contact);
+  } catch (error) {
+    next(error);
+  }
 };
 
 export {
