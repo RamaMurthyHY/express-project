@@ -60,6 +60,11 @@ class UserControllers {
       next(error);
     }
   };
+
+  current = (req: any, res: Response, next: NextFunction) => {
+    const user = req.user;
+    res.status(StatusCodes.OK).json(user);
+  };
 }
 
 export default UserControllers;
