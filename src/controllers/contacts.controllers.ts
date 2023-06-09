@@ -28,11 +28,7 @@ const getContact = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const createContact = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const createContact = async (req: any, res: Response, next: NextFunction) => {
   try {
     const { name, email, phone } = req.body || {};
 
@@ -51,6 +47,7 @@ const createContact = async (
       name,
       email,
       phone,
+      user_id: req.user._id,
     });
     res.status(201).json(contact);
   } catch (error) {
