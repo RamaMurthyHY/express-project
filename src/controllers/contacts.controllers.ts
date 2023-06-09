@@ -2,13 +2,9 @@ import { Request, Response, NextFunction } from "express";
 import { Contacts } from "../db/models";
 import { StatusCodes } from "../enums";
 
-const getAllContacts = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const getAllContacts = async (req: any, res: Response, next: NextFunction) => {
   try {
-    const contacts = await Contacts.find();
+    const contacts = await Contacts.find({ user_id: req.user._id });
     res.status(200).json(contacts);
   } catch (error) {
     next(error);
