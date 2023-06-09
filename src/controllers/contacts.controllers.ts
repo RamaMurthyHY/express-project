@@ -55,11 +55,7 @@ const createContact = async (req: any, res: Response, next: NextFunction) => {
   }
 };
 
-const updateContact = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const updateContact = async (req: any, res: Response, next: NextFunction) => {
   try {
     const _id = req.params.id;
     const { name } = req.body || {};
@@ -68,7 +64,10 @@ const updateContact = async (
       res.status(StatusCodes.NotFound);
       throw new Error("Contact not found");
     }
-
+    if (contact.user_id !== req.user._id) {
+      res.status(StatusCodes.Unauthorized);
+      throw new Error("You are not authorized to update this contact");
+    }
     const updatedContact = await Contacts.findByIdAndUpdate(
       _id,
       { name },
